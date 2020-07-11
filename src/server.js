@@ -33,6 +33,13 @@ app.get('/user', function (req, res) {
   });
 });
 
+app.get('/user/:id', function (req, res) {
+  res.status(200).json({
+    ok: true,
+    message: 'get user id!',
+  });
+});
+
 app.post('/user', function (req, res) {
   const body = req.body;
 
@@ -46,14 +53,14 @@ app.post('/user', function (req, res) {
 app.put('/user/:id', function (req, res) {
   res.status(200).json({
     ok: true,
-    message: 'Hello World!',
+    message: 'put users!',
   });
 });
 
 app.delete('/user/:id', function (req, res) {
   res.status(200).json({
     ok: true,
-    message: 'Hello World!',
+    message: 'delete users!',
   });
 });
 
