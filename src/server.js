@@ -1,11 +1,19 @@
 /**
  * Importaciones
  */
-// require('dotenv').config();
+require('dotenv').config();
 require('./config/config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('./config/database.js');
+const config = require('./config/config.js');
+
+/**
+ * Definición de valores para la app
+ */
+app.set('port', config.port);
+
 /**
  * configuraciones
  */
@@ -16,54 +24,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.set('PORT', process.env.PORT);
+/** urls de usuario */
 
+const userRouter = require('./routes/routes');
 app.get('/', function (req, res) {
+  abcd();
   res.status(200).json({
     ok: true,
     message: 'Hello World!',
   });
 });
+app.use(userRouter);
 
-/** urls de usuario */
-app.get('/user', function (req, res) {
-  res.status(200).json({
-    ok: true,
-    message: 'Hello Users!',
+/***************************************************
+ * Inicializacion del servidor
+ ***************************************************/
+
+const db = mongoose.connection;
+
+db.then((response) => {
+  console.log(`Base de datos OK!`);
+
+  app.listen(app.get('port'), () => {
+    console.log(`API listening on port ${app.get('port')}!`);
   });
-});
-
-app.get('/user/:id', function (req, res) {
-  res.status(200).json({
-    ok: true,
-    message: 'get user id!',
-  });
-});
-
-app.post('/user', function (req, res) {
-  const body = req.body;
-
-  res.status(200).json({
-    ok: true,
-    message: 'post users!',
-    body,
-  });
-});
-
-app.put('/user/:id', function (req, res) {
-  res.status(200).json({
-    ok: true,
-    message: 'put users!',
-  });
-});
-
-app.delete('/user/:id', function (req, res) {
-  res.status(200).json({
-    ok: true,
-    message: 'delete users!',
-  });
-});
-
-app.listen(app.get('PORT'), function () {
-  console.log(`Example app listening on port ${app.get('PORT')}!`);
+}).catch((err) => {
+  console.error('DB connection error:', err);
 });
