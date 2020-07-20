@@ -27,7 +27,7 @@ UserSchema.plugin(uniqueValidator, { message: '{PATH} is not unique' });
 UserSchema.pre('save', function (next) {
   const user = this;
 
-  if (user.isModified('password')) {
+  if (user.isNew) {
     user.password = this.encryptPasswordSync(user.password);
   }
 
@@ -49,16 +49,6 @@ UserSchema.pre('findOneAndUpdate', function (next) {
 });
 
 /**
- * Hook to after save user to replace the password
- */
-// UserSchema.post('save', function (next) {
-//   const user = this;
-//   user.password = ':)';
-
-//   return next;
-// });
-
-/**
  * sync method to encript password
  */
 UserSchema.methods.encryptPasswordSync = (password) => {
@@ -67,11 +57,21 @@ UserSchema.methods.encryptPasswordSync = (password) => {
   return hash;
 };
 
+// UserSchema.methods.encryptPassword = async (password) => {
+//   const salt = await bcrypt.genSalt(10);
+//   const hash = await bcrypt.hash(password, salt);
+//   return hash;
+// };
+
 /**
  * method to verify password
  **/
-// UserSchema.methods.verifyPassword = function (password) {
-//   return bcrypt.compareSync(password, this.password);
+UserSchema.methods.verifyPasswordSync = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+// UserSchema.methods.verifyPassword = async function (password) {
+//   return await bcrypt.compare(password, this.password);
 // };
 
 /**

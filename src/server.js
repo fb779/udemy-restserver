@@ -26,7 +26,8 @@ app.use(bodyParser.json());
 
 /** urls de usuario */
 
-const userRouter = require('./routes/routes');
+const routes = require('./routes/routes');
+
 app.get('/', function (req, res) {
   abcd();
   res.status(200).json({
@@ -34,7 +35,8 @@ app.get('/', function (req, res) {
     message: 'Hello World!',
   });
 });
-app.use(userRouter);
+
+app.use(routes);
 
 /***************************************************
  * Inicializacion del servidor
