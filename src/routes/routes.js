@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { errorHanddler } = require('../middleware/errors.js');
+const { errorHanddler } = require('../middleware/errors.guard.js');
 const loginRoutes = require('./login.routes.js');
 const usersRoutes = require('./users.routes.js');
 

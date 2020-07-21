@@ -1,7 +1,10 @@
 const { Router } = require('express');
+const { isAuth } = require('../middleware/auth.guard.js');
 const UserController = require('../controllers/users.controller.js');
 
 const user_router = Router();
+
+user_router.use(isAuth);
 
 user_router.get('/:id', UserController.getUser);
 
