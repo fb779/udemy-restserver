@@ -1,7 +1,9 @@
 const authSer = require('./../services/auth.service.js');
 // const _ = require('underscore');
 
-// funcion de verificacion de token valido para autenticar la peticion
+/**
+ * verificacion de token valido para autenticar la peticion
+ */
 function isAuth(req, res, next) {
   try {
     const token = extractToken(req);

@@ -28,7 +28,6 @@ function decodeToken(token) {
 
     return payload;
   } catch (error) {
-    console.log('error del token', error.name);
     error.status = 401;
     throw error;
   }
