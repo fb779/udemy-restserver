@@ -27,7 +27,7 @@ UserSchema.plugin(uniqueValidator, { message: '{PATH} is not unique' });
 UserSchema.pre('save', function (next) {
   const user = this;
 
-  if (user.isNew) {
+  if (user.isNew && user.isModified('password')) {
     user.password = this.encryptPasswordSync(user.password);
   }
 

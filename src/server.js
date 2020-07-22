@@ -8,6 +8,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database.js');
 const config = require('./config/config.js');
+const path = require('path');
 
 /**
  * Definición de valores para la app
@@ -29,12 +30,13 @@ app.use(bodyParser.json());
 const routes = require('./routes/routes');
 
 app.get('/', function (req, res) {
-  abcd();
   res.status(200).json({
     ok: true,
     message: 'Hello World!',
   });
 });
+
+app.use('/public', express.static(path.resolve(__dirname, '..', 'public')));
 
 app.use(routes);
 
