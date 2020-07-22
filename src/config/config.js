@@ -25,6 +25,11 @@ if (process.env.NODE_ENV === 'dev') {
  *********************************/
 const seed = process.env.SEED;
 
+/*********************************
+ * Definicion del seed
+ *********************************/
+const client_id = process.env.CLIENT_ID;
+
 /**
  * Definicion de validaciones para modelos
  */
@@ -53,4 +58,5 @@ module.exports = {
   rolesValid,
   // definicion de valores para modelos
   rolesValues,
+  client_id,
 };

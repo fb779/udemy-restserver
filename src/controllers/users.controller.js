@@ -22,7 +22,7 @@ async function getListUser(req, res, next) {
       total: totalRegistros,
     });
   } catch (error) {
-    console.log('error del controller: get list user');
+    // console.log('error del controller: get list user');
     next(error);
   }
 }
@@ -42,7 +42,7 @@ async function getUser(req, res, next) {
       data: user,
     });
   } catch (error) {
-    console.log('error del controller: get user');
+    // console.log('error del controller: get user');
     next(error);
   }
 }
@@ -61,7 +61,7 @@ async function createUser(req, res, next) {
       data: newUser,
     });
   } catch (error) {
-    console.log('error del controller: create');
+    // console.log('error del controller: create');
     next(error);
   }
 }
@@ -88,7 +88,7 @@ async function updateUser(req, res, next) {
       data: user,
     });
   } catch (error) {
-    console.log('error del controller, update');
+    // console.log('error del controller, update');
     next(error);
   }
 }
@@ -111,7 +111,7 @@ async function deleteUser(req, res, next) {
       data: user,
     });
   } catch (error) {
-    console.log('error del controller: delete');
+    // console.log('error del controller: delete');
     next(error);
   }
 }
@@ -132,7 +132,7 @@ async function dropUser(req, res, next) {
       data: user,
     });
   } catch (error) {
-    console.log('error del controller: delete');
+    // console.log('error del controller: delete');
     next(error);
   }
 }

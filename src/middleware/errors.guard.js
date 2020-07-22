@@ -9,6 +9,14 @@ const errorHanddler = (err, req, res, next) => {
   //   });
   // }
 
+  if (err.hasOwnProperty('name') && err.name === 'GoogleError') {
+    return res.status(err.status).json({
+      ok: false,
+      message: err.message,
+      errors: err.name,
+    });
+  }
+
   if (!err.hasOwnProperty('status') && err.hasOwnProperty('errors')) {
     return res.status(400).json({
       ok: false,
