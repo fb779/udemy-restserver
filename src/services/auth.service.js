@@ -5,7 +5,7 @@ const _ = require('underscore');
 
 // metodo encargado de crear un token para las peticiones
 function createToken(_user) {
-  const user = _.pick(_user, ['name', 'email', 'role']);
+  const user = _.pick(_user, ['_id', 'name', 'email', 'role']);
 
   let dt = moment();
 
