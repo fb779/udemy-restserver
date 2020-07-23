@@ -1,4 +1,5 @@
 const authSer = require('./../services/auth.service.js');
+const authError = require('../errors/authError.error.js');
 // const _ = require('underscore');
 
 /**
@@ -9,7 +10,8 @@ function isAuth(req, res, next) {
     const token = extractToken(req);
 
     if (!token) {
-      throw { status: 401, message: `You don't have authorization`, errors: `You don't have authorization` };
+      // throw { status: 401, message: `You don't have authorization`, errors: `You don't have authorization` };
+      throw new authError();
     }
 
     const payload = authSer.decodeToken(token);

@@ -1,45 +1,51 @@
 const errorHanddler = (err, req, res, next) => {
   // console.log('error generalizado', err);
+  const errorStatus = err.status || 500;
+  let errorObject;
 
-  // if (err.hasOwnProperty('name') && err.name === 'JsonWebTokenError') {
-  //   return res.status(err.status).json({
+  if (typeof err.toJson === 'function') {
+    errorObject = err.toJson();
+  } else {
+    errorObject = {
+      ok: false,
+      message: 'UnkwnowError',
+      errors: 'Unkwnow Error',
+      errors: err,
+    };
+  }
+
+  return res.status(errorStatus).json(errorObject);
+
+  // if (!err.hasOwnProperty('status') && err.hasOwnProperty('errors')) {
+  //   return res.status(400).json({
   //     ok: false,
   //     message: err.message,
-  //     errors: err.name,
+  //     errors: err.errors,
   //   });
   // }
 
-  if (err.hasOwnProperty('name') && err.name === 'GoogleError') {
-    return res.status(err.status).json({
-      ok: false,
-      message: err.message,
-      errors: err.name,
-    });
-  }
+  // if (typeof err.toJson === 'function') {
+  //   return res.status(err.status).json({
+  //     ok: false,
+  //     message: err.message,
+  //     name: err.name,
+  //   });
+  // }
 
-  if (!err.hasOwnProperty('status') && err.hasOwnProperty('errors')) {
-    return res.status(400).json({
-      ok: false,
-      message: err.message,
-      errors: err.errors,
-    });
-  }
+  // if (err.hasOwnProperty('status')) {
+  //   return res.status(err.status).json({
+  //     ok: false,
+  //     message: err.message,
+  //     name: err.name,
+  //   });
+  // }
 
-  if (err.hasOwnProperty('status')) {
-    return res.status(err.status).json({
-      ok: false,
-      message: err.message,
-      errors: err.errors,
-    });
-  }
-
-  return res.status(500).json({
-    ok: false,
-    message: 'UnkwnowError',
-    errors: 'Unkwnow Error',
-    // message: err.message,
-    // errors: err,
-  });
+  // return res.status(500).json({
+  //   ok: false,
+  //   message: 'UnkwnowError',
+  //   errors: 'Unkwnow Error',
+  //   errors: err,
+  // });
 };
 
 module.exports = {

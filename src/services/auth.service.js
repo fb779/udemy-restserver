@@ -2,7 +2,7 @@ const { seed } = require('../config/config.js');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const _ = require('underscore');
-
+const tokenError = require('../errors/tokenError.error.js');
 // metodo encargado de crear un token para las peticiones
 function createToken(_user) {
   const user = _.pick(_user, ['name', 'email', 'role']);
@@ -28,8 +28,9 @@ function decodeToken(token) {
 
     return payload;
   } catch (error) {
-    error.status = 401;
-    throw error;
+    // error.status = 401;
+    // throw error;
+    throw new tokenError(error);
   }
 }
 

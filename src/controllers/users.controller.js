@@ -1,5 +1,6 @@
 const UserModel = require('../models/user.models');
 const _ = require('underscore');
+const ValidationError = require('../errors/validationError.error');
 
 async function getListUser(req, res, next) {
   try {
@@ -62,7 +63,8 @@ async function createUser(req, res, next) {
     });
   } catch (error) {
     // console.log('error del controller: create');
-    next(error);
+    // next(error);
+    next(new ValidationError(error));
   }
 }
 
@@ -90,6 +92,7 @@ async function updateUser(req, res, next) {
   } catch (error) {
     // console.log('error del controller, update');
     next(error);
+    // next(new ValidationError(error));
   }
 }
 
