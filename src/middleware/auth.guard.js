@@ -1,4 +1,5 @@
 const authSer = require('./../services/auth.service.js');
+const { contains } = require('underscore');
 // const _ = require('underscore');
 
 /**
@@ -27,9 +28,12 @@ function extractToken(req) {
 
   if (req.headers.authorization) {
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.query.token) {
+  } else if (req.baseUrl.includes('images') && req.query.token) {
     token = req.query.token;
   }
+  // else {
+  //   throw { status: 401, message: `Token invalid to use method `, errors: `Token invalid to use method` };
+  // }
 
   return token;
 }
