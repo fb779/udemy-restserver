@@ -33,6 +33,14 @@ const errorHanddler = (err, req, res, next) => {
     });
   }
 
+  if (err.hasOwnProperty('kind') && err.kind === 'ObjectId') {
+    return res.status(403).json({
+      ok: false,
+      message: `It is not valid Id`,
+      errors: err.errors,
+    });
+  }
+
   return res.status(500).json({
     ok: false,
     message: 'UnkwnowError',
