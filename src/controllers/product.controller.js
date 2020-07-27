@@ -119,8 +119,6 @@ async function findProduct(req, res, next) {
 
     const regex = new RegExp(term, 'i');
 
-    console.log(term);
-
     const list = await ProductModel.find({ name: regex });
 
     return res.status(200).json({

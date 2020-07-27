@@ -1,3 +1,8 @@
+/*******************************************
+ * Imports
+ *******************************************/
+const path = require('path');
+
 /*********************************
  * Definicion del environment
  *********************************/
@@ -47,6 +52,20 @@ const rolesValues = {
   client: 'CLIENT',
 };
 
+/*******************************************
+ * Definicion de ruta para upload
+ *******************************************/
+const uploadDir = path.join(__dirname, '../../storage');
+const noImagePath = path.join(__dirname, '../../storage/assets/no-image.jpg');
+
+/*********************************
+ * Types para carga de imagenes
+ *********************************/
+typesUploads = {
+  users: 'users',
+  products: 'products',
+};
+
 /*********************************
  * Export de las configuraciones
  *********************************/
@@ -59,4 +78,7 @@ module.exports = {
   // definicion de valores para modelos
   rolesValues,
   client_id,
+  uploadDir,
+  noImagePath,
+  typesUploads,
 };
