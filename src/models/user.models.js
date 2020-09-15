@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 
-const { rolesValid, rolesValues } = require('./../config/config.js');
+const {rolesValid, rolesValues} = require('./../config/config.js');
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
-    name: { type: String, required: [true, 'El Apellido es necesario'] },
-    email: { type: String, unique: true, required: [true, 'El correo es necesario'], lowercase: true },
-    password: { type: String, required: [true, 'La contraseña es necesario'] },
-    img: { type: String, required: false, default: '' },
-    role: { type: String, default: rolesValues.user, enum: rolesValid, uppercase: true },
-    google: { type: Boolean, default: false },
-    state: { type: Boolean, default: true },
+    name: {type: String, required: [true, 'El Apellido es necesario']},
+    email: {type: String, unique: true, required: [true, 'El correo es necesario'], lowercase: true},
+    password: {type: String, required: [true, 'La contraseña es necesario']},
+    img: {type: String, required: false, default: ''},
+    role: {type: String, default: rolesValues.user, enum: rolesValid, uppercase: true},
+    google: {type: Boolean, default: false},
+    state: {type: Boolean, default: true},
   },
-  { timestamps: true, collection: 'users' }
+  {timestamps: true, collection: 'users'}
 );
 
-UserSchema.plugin(uniqueValidator, { message: '{PATH} is not unique' });
+UserSchema.plugin(uniqueValidator, {message: '{PATH} is not unique'});
 
 /**
  * Hook to before to save user to encrypt password

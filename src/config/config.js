@@ -11,18 +11,19 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 /*********************************
  * Definicion del puerto
  *********************************/
-process.env.PORT = process.env.PORT || 3000;
+process.env.PORT = process.env.PORT || 3005;
 const port = process.env.PORT;
 
 /*********************************
  * Definicion de base de datos
  *********************************/
 let db_url = '';
-if (process.env.NODE_ENV === 'dev') {
-  db_url = `mongodb://localhost:27017/cafe`;
-} else {
+if (process.env.NODE_ENV !== 'dev') {
   process.env.MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
   db_url = process.env.MONGODB_URI;
+} else {
+  db_url = `mongodb://localhost:27017/cafe`;
+  // db_url = `mongodb://mongoservice:27017/cafe`;
 }
 
 /*********************************

@@ -1,6 +1,8 @@
 const UserModel = require('../models/user.models');
 const _ = require('underscore');
 
+// const sk = this.global.io;
+
 async function getListUser(req, res, next) {
   try {
     const limit = parseInt(req.query.limit) || 5;
@@ -8,11 +10,13 @@ async function getListUser(req, res, next) {
 
     offSet = offSet > 0 ? offSet : 0;
 
-    let filter = { state: true };
+    let filter = {state: true};
 
     const totalRegistros = await UserModel.countDocuments(filter);
 
     const data = await UserModel.find(filter).select('name email img role').skip(offSet).limit(limit);
+
+    this.global.io.to().emit('mensaje', {message: 'emision desde el controller', data});
 
     res.status(200).json({
       ok: true,
@@ -34,7 +38,7 @@ async function getUser(req, res, next) {
     const user = await UserModel.findById(id);
 
     if (!user) {
-      throw { status: 404, message: 'User not found', errors: `This user ${id} does not exist` };
+      throw {status: 404, message: 'User not found', errors: `This user ${id} does not exist`};
     }
 
     return res.status(200).json({
@@ -77,10 +81,10 @@ async function updateUser(req, res, next) {
     // permite la actualizacion del email al editar
     // const user = await UserModel.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' });
     // no permite la actualizacion del email al editar
-    const user = await UserModel.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+    const user = await UserModel.findByIdAndUpdate(id, body, {new: true, runValidators: true});
 
     if (!user) {
-      throw { status: 404, message: 'User not found', errors: `This user ${id} does not exist` };
+      throw {status: 404, message: 'User not found', errors: `This user ${id} does not exist`};
     }
 
     return res.status(200).json({
@@ -97,12 +101,12 @@ async function deleteUser(req, res, next) {
   try {
     const id = req.params.id;
 
-    const body = { state: false };
+    const body = {state: false};
 
-    const user = await UserModel.findByIdAndUpdate(id, body, { new: true });
+    const user = await UserModel.findByIdAndUpdate(id, body, {new: true});
 
     if (!user) {
-      throw { status: 404, message: 'User not found', errors: `This user ${id} does not exist` };
+      throw {status: 404, message: 'User not found', errors: `This user ${id} does not exist`};
     }
 
     return res.status(200).json({
@@ -123,7 +127,7 @@ async function dropUser(req, res, next) {
     const user = await UserModel.findByIdAndRemove(id);
 
     if (!user) {
-      throw { status: 404, message: 'User not found', errors: `This user ${id} does not exist` };
+      throw {status: 404, message: 'User not found', errors: `This user ${id} does not exist`};
     }
 
     return res.status(200).json({

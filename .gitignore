@@ -160,4 +160,6 @@ GitHub.sublime-settings
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,sublimetext,dotenv
 
 storage/**/*.jpg
+storage/**/*.jpeg
+storage/**/*.png
 !storage/assets/*
