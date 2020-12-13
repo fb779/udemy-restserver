@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  nodejs:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: 07-restserver_nodejs
+    container_name: web-app
+    environment:
+      - PORT=3000
+      - NODE_ENV=dev
+      - DB_HOST=cafe.vel0x.mongodb.net
+      - DB_PORT=27017
+      - DB_NAME=cafe
+      - DB_USER=caferestapi
+      - DB_PASS=0zbDLytchnOEKP6j
+      - SEED=m1-s33d-s3cr3t0-p4r4-d3v
+      - CLIENT_ID=27844626081-j5nsi0fgd789fm54l7r6to87jn7iskvc.apps.googleusercontent.com
+    ports:
+      - 3100:3000
+    volumes:
+      - .:/home/node/app
+      - ./public:/home/node/app/public
+      - ./storage:/home/node/app/storage
+      - ./node_modules:/home/node/app/node_modules
+    networks:
+      - servicesnet
+    # command: bash
+    command: npm run dev
+    # command: /home/node/app/node_modules/.bin/nodemon src/server.js
+
+networks:
+  servicesnet:
+    name: networkservices
+    driver: bridge

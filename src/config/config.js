@@ -11,7 +11,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 /*********************************
  * Definicion del puerto
  *********************************/
-process.env.PORT = process.env.PORT || 3005;
+process.env.PORT = process.env.PORT || 3100;
 const port = process.env.PORT;
 
 /*********************************

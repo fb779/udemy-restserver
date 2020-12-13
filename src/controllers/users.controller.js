@@ -1,8 +1,6 @@
 const UserModel = require('../models/user.models');
 const _ = require('underscore');
 
-// const sk = this.global.io;
-
 async function getListUser(req, res, next) {
   try {
     const limit = parseInt(req.query.limit) || 5;
@@ -16,7 +14,7 @@ async function getListUser(req, res, next) {
 
     const data = await UserModel.find(filter).select('name email img role').skip(offSet).limit(limit);
 
-    this.global.io.to().emit('mensaje', {message: 'emision desde el controller', data});
+    this.global.io.emit('mensaje', {message: 'emision desde el controller', data});
 
     res.status(200).json({
       ok: true,
@@ -79,9 +77,9 @@ async function updateUser(req, res, next) {
     const body = _.pick(req.body, ['name', 'email', 'img', 'role', 'state']);
 
     // permite la actualizacion del email al editar
-    // const user = await UserModel.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' });
+    const user = await UserModel.findByIdAndUpdate(id, body, {new: true, runValidators: true, context: 'query'});
     // no permite la actualizacion del email al editar
-    const user = await UserModel.findByIdAndUpdate(id, body, {new: true, runValidators: true});
+    // const user = await UserModel.findByIdAndUpdate(id, body, {new: true, runValidators: true});
 
     if (!user) {
       throw {status: 404, message: 'User not found', errors: `This user ${id} does not exist`};
