@@ -14,7 +14,7 @@ async function getListUser(req, res, next) {
 
     const data = await UserModel.find(filter).select('name email img role').skip(offSet).limit(limit);
 
-    this.global.io.emit('mensaje', {message: 'emision desde el controller', data});
+    // this.global.io.emit('mensaje', {message: 'emision desde el controller', data});
 
     res.status(200).json({
       ok: true,

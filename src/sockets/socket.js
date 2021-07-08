@@ -1,18 +1,17 @@
-const {io} = require('../server.js');
+const socketController = (socket) => {
+  console.log('cliente conectado al server', socket.id);
 
-io.on('connection', (client) => {
-  console.log('cliente conectado al server', client.id);
-
-  client.emit('mensaje', {message: 'Bienvenido a los sockets con js'});
-
-  client.on('disconnect', () => {
-    console.log('usuario desconectado', client.id);
+  socket.on('disconnect', () => {
+    console.log('usuario desconectado', socket.id);
   });
 
-  client.on('enviar-mensaje', (data, callback) => {
+  socket.emit('mensaje', {message: 'Bienvenido a los sockets con js'});
+
+
+  socket.on('enviar-mensaje', (data, callback) => {
     console.log('llegada de mensajeria', data);
 
-    client.broadcast.emit('mensaje', data);
+    socket.broadcast.emit('mensaje', data);
 
     // if (!callback) return;
 
@@ -26,4 +25,6 @@ io.on('connection', (client) => {
     //   });
     // }
   });
-});
+};
+
+module.exports = {socketController};

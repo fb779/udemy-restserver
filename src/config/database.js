@@ -2,13 +2,21 @@ const mongoose = require('mongoose');
 
 const {db_url} = require('./config');
 
-// console.log('Coneccion a mongo', db_url);
+const dbConnection = async ()=>{
+  try {
+    await mongoose.connect(db_url, {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    });
+    console.log(`Base de datos OK!`);
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error de coneccion a la BD');
+  }
+}
 
-mongoose.connect(db_url, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
-
-module.exports = mongoose;
+module.exports = {
+  dbConnection
+};
